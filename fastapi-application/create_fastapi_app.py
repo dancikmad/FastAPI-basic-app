@@ -44,6 +44,7 @@ def register_static_docs_routes(app: FastAPI):
 
 def create_app(
     create_custom_static_urls: bool = False,
+    set_cors: bool = False,
 ) -> FastAPI:
     app = FastAPI(
         default_response_class=ORJSONResponse,
@@ -53,5 +54,16 @@ def create_app(
     )
     if create_custom_static_urls:
         register_static_docs_routes(app)
-    return app
 
+    if set_cors:
+        from fastapi.middleware.cors import CORSMiddleware
+
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+    return app

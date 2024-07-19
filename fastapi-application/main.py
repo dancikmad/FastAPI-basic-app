@@ -10,6 +10,7 @@ from create_fastapi_app import create_app
 
 main_app = create_app(
     create_custom_static_urls=True,
+    set_cors=True,
 )
 
 main_app.include_router(
